@@ -119,13 +119,13 @@
             animation: wobble 1.5s ease-in-out infinite;
         }
 
-        /* ปรับตำแหน่งใหม่ทั้งหมด กระจายให้อยู่ขอบๆ ไม่ให้ทับกัน */
+        /* ตำแหน่งสำหรับหน้าจอคอม/ไอแพด (จอใหญ่) */
         .bubble-1 { top: 10%; left: 5%; } 
         .bubble-2 { top: 12%; right: 5%; } 
-        .bubble-3 { top: 35%; left: 6%; padding: 8px 15px;} /* หัวใจ */
-        .bubble-6 { top: 38%; right: 6%; } /* จุ้บบบ */
-        .bubble-7 { bottom: 35%; left: 5%; } /* กอดกาานน */
-        .bubble-8 { bottom: 40%; right: 5%; } /* คิดถึงเบบี้ */
+        .bubble-3 { top: 35%; left: 6%; padding: 8px 15px;} 
+        .bubble-6 { top: 38%; right: 6%; } 
+        .bubble-7 { bottom: 35%; left: 5%; } 
+        .bubble-8 { bottom: 40%; right: 5%; } 
         .bubble-4 { bottom: 12%; left: 15%; } 
         .bubble-5 { bottom: 15%; right: 10%; } 
 
@@ -143,6 +143,31 @@
             to {
                 transform: translateY(110vh) rotate(360deg);
             }
+        }
+
+        /* =========================================
+           จัดระเบียบใหม่สำหรับ "หน้าจอมือถือ" โดยเฉพาะ
+           ========================================= */
+        @media (max-width: 600px) {
+            /* ย่อรูปและข้อความหลักลงนิดหน่อย เพื่อเพิ่มพื้นที่ */
+            .main-img { width: 200px; height: 200px; }
+            .title-text { font-size: 24px; margin-bottom: 20px; }
+            .btn { font-size: 16px; padding: 12px 25px; }
+            
+            /* ย่อขนาดกล่องข้อความลอยๆ */
+            .floating-bubble { font-size: 12px; padding: 6px 12px; }
+            .bubble-3 { padding: 4px 10px; }
+
+            /* ดันกล่องข้อความไปชิดขอบบน-ล่าง เพื่อไม่ให้บังรูปตรงกลาง */
+            .bubble-1 { top: 5%; left: 2%; } 
+            .bubble-2 { top: 8%; right: 2%; } 
+            .bubble-3 { top: 18%; left: 2%; } /* ขยับขึ้นหลบรูป */
+            .bubble-6 { top: 20%; right: 2%; } /* ขยับขึ้นหลบรูป */
+            
+            .bubble-7 { bottom: 30%; left: 2%; } /* ขยับลงหลบปุ่ม */
+            .bubble-8 { bottom: 25%; right: 2%; } /* ขยับลงหลบปุ่ม */
+            .bubble-4 { bottom: 12%; left: 5%; } 
+            .bubble-5 { bottom: 8%; right: 5%; } 
         }
     </style>
 </head>
@@ -201,6 +226,9 @@
         btnNo.style.display = 'none';
         mainTitle.innerHTML = "เย้ๆๆ เบบี้หายงอนแย้วววว 🎉💖";
         mainTitle.style.color = "#d87093";
+        // ทำให้ข้อความหลักเด้งอยู่ข้างหน้าข้อความลอย
+        mainTitle.style.position = "relative";
+        mainTitle.style.zIndex = "50";
         
         bubbles.forEach((bubble, index) => {
             setTimeout(() => {
