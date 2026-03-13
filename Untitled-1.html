@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ดีกันนะเบบี้</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #d1bdf2; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Mali', cursive;
+            overflow: hidden; 
+            position: relative; 
+        }
+        
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .image-box {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 25px;
+            background-color: white;
+            padding: 8px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-img {
+            width: 280px; 
+            height: 280px;
+            border-radius: 20px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .title-text {
+            font-size: 32px; 
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 30px;
+            transition: all 0.5s ease;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px; 
+            min-height: 60px;
+        }
+
+        .btn {
+            font-family: 'Mali', cursive;
+            font-size: 20px; 
+            font-weight: 600;
+            padding: 15px 35px; 
+            border-radius: 35px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s ease, background-color 0.2s; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .btn-white {
+            background-color: #ffffff;
+            color: #d87093;
+            z-index: 20;
+        }
+
+        .btn-dark {
+            background-color: #333333;
+            color: #ffffff;
+            z-index: 15;
+            white-space: nowrap; 
+        }
+
+        /* --- ข้อความลอยๆ --- */
+        .floating-bubble {
+            position: absolute;
+            background-color: white;
+            color: #d87093;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            pointer-events: none;
+            z-index: 5;
+            white-space: nowrap;
+            
+            opacity: 0;
+            transform: scale(0.5); 
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .floating-bubble.show {
+            opacity: 1;
+        }
+
+        /* เอฟเฟกต์ "ขยับดุ๊กดิ๊กๆ" */
+        @keyframes wobble {
+            0% { transform: scale(1) rotate(0deg) translate(0px, 0px); }
+            25% { transform: scale(1.03) rotate(2deg) translate(2px, -2px); }
+            50% { transform: scale(1) rotate(0deg) translate(-2px, 2px); }
+            75% { transform: scale(1.03) rotate(-2deg) translate(2px, 2px); }
+            100% { transform: scale(1) rotate(0deg) translate(0px, 0px); }
+        }
+
+        .floating-bubble.show.animate-wobble {
+            animation: wobble 1.5s ease-in-out infinite;
+        }
+
+        /* ปรับตำแหน่งใหม่ทั้งหมด กระจายให้อยู่ขอบๆ ไม่ให้ทับกัน */
+        .bubble-1 { top: 10%; left: 5%; } 
+        .bubble-2 { top: 12%; right: 5%; } 
+        .bubble-3 { top: 35%; left: 6%; padding: 8px 15px;} /* หัวใจ */
+        .bubble-6 { top: 38%; right: 6%; } /* จุ้บบบ */
+        .bubble-7 { bottom: 35%; left: 5%; } /* กอดกาานน */
+        .bubble-8 { bottom: 40%; right: 5%; } /* คิดถึงเบบี้ */
+        .bubble-4 { bottom: 12%; left: 15%; } 
+        .bubble-5 { bottom: 15%; right: 10%; } 
+
+        /* --- เอฟเฟกต์ของตก --- */
+        .falling-item {
+            position: absolute;
+            top: -50px;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 25;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-bubble bubble-1" data-rotate="-5deg">คนเก่งม่ายงอนนน</div>
+<div class="floating-bubble bubble-2" data-rotate="8deg">ดีกันนะเบบี้ 😻😻</div>
+<div class="floating-bubble bubble-3" data-rotate="-10deg">🤍🤍</div>
+<div class="floating-bubble bubble-4" data-rotate="4deg">ดีกันนน 🤍🤍</div>
+<div class="floating-bubble bubble-5" data-rotate="-6deg">รักที่สุดเยยย 💖</div>
+<div class="floating-bubble bubble-6" data-rotate="7deg">จุ้บบบ 😘</div>
+<div class="floating-bubble bubble-7" data-rotate="-3deg">กอดกาานน 🤗</div>
+<div class="floating-bubble bubble-8" data-rotate="5deg">คิดถึงเบบี้ที่สุดด 🥰</div>
+
+<div class="container">
+    <div class="image-box">
+        <img src="คู่.jpg" alt="Our Picture" class="main-img">
+    </div>
+    
+    <div class="title-text" id="mainTitle">ดีกันนะเบบี้ 😻😻</div>
+    
+    <div class="btn-group">
+        <button class="btn btn-white" id="btnYes" onclick="makeUp()">ดีกันนะ</button>
+        <button class="btn btn-dark" id="btnNo">ไม่หายงอนจริงๆ</button>
+    </div>
+</div>
+
+<script>
+    const btnNo = document.getElementById('btnNo');
+    const btnYes = document.getElementById('btnYes');
+    const mainTitle = document.getElementById('mainTitle');
+    const bubbles = document.querySelectorAll('.floating-bubble');
+    
+    let noButtonScale = 1;
+
+    function dodgeBtn() {
+        noButtonScale -= 0.15;
+        btnNo.style.position = 'fixed';
+        const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 20); 
+        const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 20);
+        
+        if (noButtonScale <= 0.2) {
+            btnNo.style.opacity = '0';
+            btnNo.style.pointerEvents = 'none';
+        } else {
+            btnNo.style.left = `${Math.max(10, x)}px`;
+            btnNo.style.top = `${Math.max(10, y)}px`;
+            btnNo.style.transform = `scale(${noButtonScale})`;
+        }
+    }
+
+    btnNo.addEventListener('mouseover', dodgeBtn);
+    btnNo.addEventListener('touchstart', dodgeBtn);
+
+    function makeUp() {
+        btnNo.style.display = 'none';
+        mainTitle.innerHTML = "เย้ๆๆ เบบี้หายงอนแย้วววว 🎉💖";
+        mainTitle.style.color = "#d87093";
+        
+        bubbles.forEach((bubble, index) => {
+            setTimeout(() => {
+                bubble.classList.add('show');
+                bubble.style.transform = `scale(1) rotate(${bubble.getAttribute('data-rotate')})`;
+                
+                setTimeout(() => {
+                    bubble.classList.add('animate-wobble');
+                }, 600); 
+                
+            }, index * 400); 
+        });
+
+        startFallingEffects();
+    }
+
+    function startFallingEffects() {
+        const emojis = ['🌸', '⭐', '✨', '🌼', '💖'];
+        
+        setInterval(() => {
+            const item = document.createElement('div');
+            item.classList.add('falling-item');
+            
+            item.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = Math.random() * 3 + 3 + 's';
+            item.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            
+            document.body.appendChild(item);
+            
+            setTimeout(() => {
+                item.remove();
+            }, 6000);
+            
+        }, 200);
+    }
+</script>
+
+</body>
+</html>
